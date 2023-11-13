@@ -17,33 +17,19 @@ public class ProfileTest extends BaseTests {
     }
 
     //add scroll to the bottom and waiting for all the method below
-//    @Test
-//    public void testDeleteBook(){
-//        profilePage.clickTrashIcon();
-//    }
-//
-//    @Test
-//    public void confirmModalHeaderText(){
-//        String modalHeaderText = profilePage.modalHeaderText();
-//        assertEquals(modalHeaderText, "Delete Book", "Verify Modal Header message");
-//        profilePage.closeModalContent();
-//    }
-//
-//    @Test
-//    public void confirmModalBodyText(){
-//        String modalBodyText = profilePage.modalBodyText();
-//        assertEquals(modalBodyText, "Delete Book", "Verify Modal Header message");
-//    }
-//
-//    @Test
-//    public void testDeleteAllBook(){
-//        profilePage.clickDeleteAllButton();
-//    }
-//
-//    @Test
-//    public void testDeleteAccount(){
-//        profilePage.clickDeleteAccountButton();
-//    }
+    @Test
+    public void testDeleteBook(){
+        profilePage.clickTrashIcon();
+        profilePage.confirmDelete("Delete Book");
+    }
+
+    @Test
+    public void testDeleteAllBook(){
+        profilePage.clickDeleteAllButton();
+        profilePage.confirmDelete("Delete Book");
+        profilePage.driverImplicitWait(100);
+    }
+
 
     //Bookstore page tests
     @Test
