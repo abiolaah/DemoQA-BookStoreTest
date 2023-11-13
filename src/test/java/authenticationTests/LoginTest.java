@@ -2,7 +2,6 @@ package authenticationTests;
 
 import base.BaseTest;
 import org.testng.annotations.Test;
-import pages.BookStorePage;
 import pages.ProfilePage;
 
 import static org.testng.Assert.*;
