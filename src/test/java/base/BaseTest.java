@@ -17,6 +17,9 @@ public class BaseTest {
         //use the get method from driver class to launch browser and load the website
         driver.get("https://demoqa.com/login");
 
+        //Resize current window to the set dimension
+        driver.manage().window().maximize();
+
         //load the loginPage
         homePage = new LoginPage(driver);
     }

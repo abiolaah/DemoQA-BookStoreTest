@@ -42,7 +42,7 @@ public class BookStorePage {
 
     //method to open book details page
     public BookDetailsPage bookDetailsPage(){
-        clickBookLink("Speaking JavaScript");
+        clickBookLink("You Don't Know JS");
         return new BookDetailsPage(driver);
     }
 

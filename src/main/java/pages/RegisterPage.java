@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,28 +17,60 @@ public class RegisterPage {
     }
 
     //declaring element for login button (locator is id = gotologin)
-    private By loginButtonLocator = By.id("gotologin");
-    //declaring the web element for login
+    private final By loginButtonLocator = By.id("gotologin");
+
+    //declaring locator for register (id= register)
+    private final By registerButtonLocator = By.id("register");
+
+    //declaring locator for  first name (id = firstname)
+    private final By firstnameLocator = By.id("firstname");
+
+    //declaring locator for  last name (id = lastname)
+    private final By lastnameLocator = By.id("lastname");
+
+    //finding locator for  username (id = userName )
+    private final By userNameLocator = By.id("userName");
+
+    //declaring locator for  password (id = password)
+    private final By passwordLocator = By.id("password");
+
+    //declaring locator for the alert Text
+    private final By alertTextLocator = By.id("name");
+
+    //declaring locator for  recaptcha frame (xpath = //iframe[@title='reCAPTCHA'])
+    private final By recaptchaFrameLocator = By.xpath("//iframe[@title='reCAPTCHA']");
+
+    //declaring locator for recaptcha checkbox (xpath = //div[@class='recaptcha-checkbox-border'])
+    private final By recaptchaCheckboxLocator = By.xpath("//div[@class='recaptcha-checkbox-border']");
+    //declaring locator for recaptcha check mark (xpath = //div[@class='recaptcha-checkbox-checkmark'])
+    private final By recaptchaCheckMarkLocator = By.xpath("//div[@class='recaptcha-checkbox-checkmark']");
+
+    //finding the web element for login button
     public WebElement loginButton(){
         return driver.findElement(loginButtonLocator);
     }
-    //declaring locator for register (id= register)
-    private By registerButtonLocator = By.id("register");
-    //private By registerButtonLocator = By.cssSelector("button#register");
-    //declaring the web element for register
+
+    //finding the web element for register button
     public WebElement registerButton(){
         return driver.findElement(registerButtonLocator);
     }
 
+    //method to click register button
     public void clickRegisterButton(){
-        WebDriverWait wait = new WebDriverWait(driver,30);
-        WebElement button = wait.until(ExpectedConditions.visibilityOf(registerButton()));
-        button.click();
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        JavascriptExecutor js = ((JavascriptExecutor)driver);
+        //presence in DOM
+        wait.until(ExpectedConditions.presenceOfElementLocated(registerButtonLocator));
+        //scrolling
+        WebElement registerButton = registerButton();
+        js.executeScript("arguments[0].scrollIntoView(true);", registerButton);
+        //clickable
+        wait.until(ExpectedConditions.elementToBeClickable(registerButtonLocator));
+        //click
+        registerButton.click();
     }
 
-    //declaring locator for  first name (id = firstname)
-    private By firstnameLocator = By.id("firstname");
-    //declaring the web element for firstname
+    //finding the web element for firstname text field
     private WebElement firstnameField(){
         return driver.findElement(firstnameLocator);
     }
@@ -45,10 +78,7 @@ public class RegisterPage {
     public void setFirstName(String firstName){
         firstnameField().sendKeys(firstName);
     }
-
-    //declaring locator for  last name (id = lastname)
-    private By lastnameLocator = By.id("lastname");
-    //declaring the web element for lastname
+    //finding the web element for lastname text field
     private WebElement lastnameField(){
         return driver.findElement(lastnameLocator);
     }
@@ -57,8 +87,6 @@ public class RegisterPage {
         lastnameField().sendKeys(lastName);
     }
 
-    //declaring locator for  username (id = userName )
-    private By userNameLocator = By.id("userName");
     //declaring the web element for username
     private WebElement userNameField(){
         return driver.findElement(userNameLocator);
@@ -68,8 +96,6 @@ public class RegisterPage {
         userNameField().sendKeys(userName);
     }
 
-    //declaring locator for  password (id = password)
-    private By passwordLocator = By.id("password");
     //declaring the web element for password
     private WebElement passwordField(){
         return driver.findElement(passwordLocator);
@@ -79,60 +105,61 @@ public class RegisterPage {
         passwordField().sendKeys(password);
     }
 
-    //declaring locator for  recaptcha frame (xpath = //iframe[@title='reCAPTCHA'])
-    private By recaptchaFrameLocator = By.xpath("//iframe[@title='reCAPTCHA']");
     //declaring the web element for password
     public void recaptchaFrame(){
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(recaptchaFrameLocator));
     }
-    //declaring locator for recaptcha checkbox (xpath = //div[@class='recaptcha-checkbox-border'])
-    private By recaptchaCheckboxLocator = By.xpath("//div[@class='recaptcha-checkbox-border']");
     //declaring the web element for password
     public WebElement recaptchaCheckbox(){
         WebDriverWait wait = new WebDriverWait(driver,30);
-        WebElement reCheckbox = wait.until(ExpectedConditions.elementToBeClickable(recaptchaCheckboxLocator));
-        return reCheckbox;
+        return wait.until(ExpectedConditions.elementToBeClickable(recaptchaCheckboxLocator));
     }
 
-    private By recaptchaCheckMarkLocator = By.xpath("//div[@class='recaptcha-checkbox-checkmark']");
-
+    //method to go to the login page
     public LoginPage clickLogin(){
-        loginButton().click();
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        JavascriptExecutor js = ((JavascriptExecutor)driver);
+        //presence in DOM
+        wait.until(ExpectedConditions.presenceOfElementLocated(loginButtonLocator));
+        //scrolling
+        WebElement loginButton = loginButton();
+        js.executeScript("arguments[0].scrollIntoView(true);", loginButton);
+        //clickable
+        wait.until(ExpectedConditions.elementToBeClickable(loginButtonLocator));
+        //click
+        loginButton.click();
         return new LoginPage(driver);
     }
 
+    //method to implicitly wait for a minute
     public void driverWait(){
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
+
+    //method to switch from the recaptcha frame to the main windows
     public void mainContent(){
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(recaptchaCheckMarkLocator));
         driver.switchTo().defaultContent();
     }
-
-    private By alertTextLocator = By.id("name");
+    //method to get the alert
     private WebElement alertText(){
         WebDriverWait wait = new WebDriverWait(driver,30);
         WebElement alert = wait.until(ExpectedConditions.visibilityOfElementLocated(alertTextLocator));
         return alert;
     }
 
+    //method to get text from the text
     public String alertTextValue(){
         String text =  alertText().getText();
         return text;
     }
 
+    //alert to accept the alert
     public void alert_clickToAccept(){
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
     }
-
-    public String alert_getText(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.alertIsPresent());
-        return driver.switchTo().alert().getText();
-    }
-
 }
