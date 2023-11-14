@@ -11,14 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 public class BookStorePage {
     // declaring the webdriver variable
-    private WebDriver driver;
+    private final WebDriver driver;
     //constructor that accepts driver as an argument
     public BookStorePage(WebDriver driver){
         this.driver = driver;
     }
 
     //locator for the menu page
-    private By profileMenuButtonLocator = By.cssSelector("div.element-list.collapse.show ul.menu-list li#item-3");
+    private final By profileMenuButtonLocator = By.cssSelector("div.element-list.collapse.show ul.menu-list li#item-3");
     //method to find profile menu button
     public WebElement profileMenuButton(){
         return driver.findElement(profileMenuButtonLocator);
@@ -50,11 +50,7 @@ public class BookStorePage {
     public void driverImplicitWait(int waitTime){
         driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
     }
-    //method to explicitly wait
-    public void driverExplicitWait(By locator){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
+
     //method to click the books link to route to the
     private void clickBookLink(String linkText){
         driver.findElement(By.linkText(linkText)).click();

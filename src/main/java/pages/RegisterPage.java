@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RegisterPage {
     // declaring the webdriver variable
-    private WebDriver driver;
+    private final WebDriver driver;
     public RegisterPage(WebDriver driver){
         this.driver = driver;
     }
@@ -146,14 +146,12 @@ public class RegisterPage {
     //method to get the alert
     private WebElement alertText(){
         WebDriverWait wait = new WebDriverWait(driver,30);
-        WebElement alert = wait.until(ExpectedConditions.visibilityOfElementLocated(alertTextLocator));
-        return alert;
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(alertTextLocator));
     }
 
     //method to get text from the text
     public String alertTextValue(){
-        String text =  alertText().getText();
-        return text;
+        return alertText().getText();
     }
 
     //alert to accept the alert
